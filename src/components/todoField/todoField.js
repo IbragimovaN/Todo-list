@@ -1,15 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./todoField.module.css";
 import { useRequestAdd, useRequestDeleting } from "../../hooks";
 
-export const TodoField = () => {
-	const [taskArray, setTaskArray] = useState([]);
-	const [isOpenInput, setIsOpenInput] = useState(false);
-	const defaultText = "Новая задача";
-	const [taskText, setTaskText] = useState(defaultText);
-	const [inputValue, setInputValue] = useState("");
+export const TodoField = ({ taskArray, refreshTodos, setRefreshTodos }) => {
+	// console.log(taskArray);
+	// const [todosArr, setTodosArr] = useState([]);
+	// // setTodosArr(taskArray);
 
-	const { isCreating, requestAdd } = useRequestAdd();
+	const randomId = Math.floor(new Date().getTime() / 1000);
+
+	const [isOpenInput, setIsOpenInput] = useState(false);
+	const [text, setText] = useState("");
+	const [taskText, setTaskText] = useState("Новая задача");
+	const [currentTask, setCurrentTask] = useState({ value: "", id: "" });
+
+	const { isCreating, requestAdd } = useRequestAdd(
+		setRefreshTodos,
+		refreshTodos,
+	);
 	const { isDeleting, requestDeleting } = useRequestDeleting();
 
 	const onClickAddTask = () => {
@@ -17,25 +25,37 @@ export const TodoField = () => {
 	};
 
 	const onClickDeleteTask = () => {
-		setTaskText(defaultText);
+		setTaskText("новая задача");
+		setRefreshTodos(true);
 		// requestDeleting(id);
 	};
 
 	const onChangeInput = (target) => {
-		setInputValue(target.value);
+		setText(target.value);
 	};
 
 	const onClickCancel = () => {
 		setIsOpenInput(false);
-		setInputValue("");
+		setCurrentTask({ value: "", id: "" });
 	};
 
 	const onClickSend = () => {
-		setTaskText(inputValue);
+		setCurrentTask({ value: text, id: randomId });
 		setIsOpenInput(false);
-		requestAdd(inputValue);
-		setTaskArray({ ...taskArray, inputValue });
+
+		// setRefreshTodos(!refreshTodos);
+		console.log(taskArray);
+		requestAdd(text, randomId);
+		// setTodosArr({ ...todosArr, currentTask });
 	};
+
+	useEffect(() => {
+		let textTask = taskArray.filter((task) => {
+			return task.id === currentTask.id;
+		});
+		let textRender = textTask[0]?.value;
+		setTaskText(textRender);
+	}, [currentTask, taskArray]);
 
 	return (
 		<div className={styles.wrapper}>
@@ -44,7 +64,7 @@ export const TodoField = () => {
 					<input
 						className={styles.input}
 						type="text"
-						value={inputValue}
+						value={text}
 						onChange={({ target }) => onChangeInput(target)}
 					></input>
 					<div>

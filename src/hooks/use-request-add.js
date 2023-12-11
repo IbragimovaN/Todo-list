@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-export const useRequestAdd = () => {
+export const useRequestAdd = (setRefreshTodos, refreshTodos) => {
 	const [isCreating, setIsCreating] = useState(false);
 
-	const requestAdd = (taskValue) => {
+	const requestAdd = (taskValue, taskId) => {
 		setIsCreating(true);
 
 		fetch("http://localhost:3005/todos", {
@@ -11,11 +11,13 @@ export const useRequestAdd = () => {
 			headers: { "Content-Type": "application/json;charset=utf-8" },
 			body: JSON.stringify({
 				value: taskValue,
+				id: taskId,
 			}),
 		})
 			.then((rawResponse) => rawResponse.json())
 			.then((response) => {
 				console.log("Задача добавлена, ответ сервера:", response);
+				setRefreshTodos(!refreshTodos);
 			})
 			.finally(() => setIsCreating(false));
 	};
