@@ -3,15 +3,15 @@ import { useState } from "react";
 export const useRequestAdd = (setRefreshTodos, refreshTodos) => {
 	const [isCreating, setIsCreating] = useState(false);
 
-	const requestAdd = (taskValue, taskId) => {
+	const requestAdd = (text, id) => {
 		setIsCreating(true);
 
 		fetch("http://localhost:3005/todos", {
 			method: "POST",
 			headers: { "Content-Type": "application/json;charset=utf-8" },
 			body: JSON.stringify({
-				value: taskValue,
-				id: taskId,
+				value: text,
+				id: id,
 			}),
 		})
 			.then((rawResponse) => rawResponse.json())

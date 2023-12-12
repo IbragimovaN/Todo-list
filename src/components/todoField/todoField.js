@@ -6,10 +6,13 @@ export const TodoField = ({
 	onClickAddTask,
 	text,
 	value,
+	taskArray,
+	id,
+	refreshTodos,
 }) => {
 	return (
 		<div className={styles.wrapperTodo}>
-			<div>{value}</div>
+			<div>{!taskArray.value ? text : taskArray.value}</div>
 			<div>
 				<button onClick={onClickDeleteTask}>Удалить</button>
 				<button onClick={onClickAddTask}>Добавить/изменить</button>

@@ -1,25 +1,28 @@
 import { useEffect, useState } from "react";
 import styles from "./containerField.module.css";
-import { useRequestAdd, useRequestDeleting } from "../../hooks";
+import {
+	useRequestAdd,
+	useRequestDeleting,
+	useRequestGet,
+	useRequestUpdate,
+} from "../../hooks";
 import { TodoField } from "../todoField/todoField";
 import { InputField } from "../inputField/inputField";
 
-export const ContainerField = ({
-	taskArray,
-	refreshTodos,
-	setRefreshTodos,
-	id,
-	value,
-}) => {
-	const randomId = Math.floor(new Date().getTime() / 1000);
-
+export const ContainerField = ({ id, value }) => {
 	const [isOpenInput, setIsOpenInput] = useState(false);
-	const [text, setText] = useState("");
-	const [valueText, setValueText] = useState("");
-	const [taskText, setTaskText] = useState("Новая задача");
-	const [currentTask, setCurrentTask] = useState({ value: "", id: "" });
+	const newTaskText = "Новая задача";
+	const [refreshTodos, setRefreshTodos] = useState(false);
+	const [text, setText] = useState(newTaskText);
 	const [isArray, setIsArray] = useState(false);
+	const [emptyField, setEmptyField] = useState(true);
 
+	const { taskArray } = useRequestGet(refreshTodos, id);
+	const { isUpdating, requestUpdate, setIsUpdating } = useRequestUpdate(
+		refreshTodos,
+		setRefreshTodos,
+		id,
+	);
 	const { isCreating, requestAdd } = useRequestAdd(
 		setRefreshTodos,
 		refreshTodos,
@@ -27,30 +30,38 @@ export const ContainerField = ({
 	const { isDeleting, requestDeleting } = useRequestDeleting();
 
 	const onClickAddTask = () => {
+		setText(taskArray.value);
 		setIsOpenInput(true);
 		setIsArray(true);
 	};
 
 	const onClickDeleteTask = () => {
-		setTaskText("новая задача");
 		setRefreshTodos(true);
 	};
 
 	const onChangeInput = (target) => {
 		setText(target.value);
+		if (!emptyField) {
+			setIsUpdating(true);
+		}
 	};
 
 	const onClickCancel = () => {
 		setIsOpenInput(false);
-		setCurrentTask({ value: "", id: "" });
 	};
 
 	const onClickSend = () => {
-		setCurrentTask({ value: text, id: randomId });
-		setIsOpenInput(false);
+		if (taskArray.value) {
+			console.log("запускаем update", text);
+			requestUpdate(text);
+		} else {
+			console.log("запускаем add");
+			requestAdd(text, id);
+		}
 
-		requestAdd(text, randomId);
-		setIsArray(true);
+		setIsOpenInput(false);
+		setEmptyField(false);
+		setRefreshTodos(!refreshTodos);
 	};
 
 	return (
@@ -70,12 +81,13 @@ export const ContainerField = ({
 					taskArray={taskArray}
 					onClickDeleteTask={onClickDeleteTask}
 					onClickAddTask={onClickAddTask}
-					taskText={taskText}
 					isOpenInput={isOpenInput}
 					text={text}
 					onChangeInput={onChangeInput}
 					onClickCancel={onClickCancel}
 					onClickSend={onClickSend}
+					id={id}
+					refreshTodos={refreshTodos}
 				/>
 			)}
 		</div>
