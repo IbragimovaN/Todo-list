@@ -10,7 +10,7 @@ export const useRequestGet = (refreshTodos) => {
 			.then((loadedData) => loadedData.json())
 			.then((loadedProducts) => {
 				setTaskArray(loadedProducts);
-				// console.log(loadedProducts);
+				console.log(loadedProducts);
 			})
 			.finally(() => setIsLoading(false));
 	}, [refreshTodos]);
