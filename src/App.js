@@ -11,11 +11,18 @@ export const App = () => {
 	return (
 		<div className={styles.app}>
 			<h1>Список задач</h1>
-			<ContainerField
-				taskArray={taskArray}
-				refreshTodos={refreshTodos}
-				setRefreshTodos={setRefreshTodos}
-			/>
+			{taskArray.map(({ value, id }) => {
+				return (
+					<ContainerField
+						key={id}
+						id={id}
+						value={value}
+						taskArray={taskArray}
+						refreshTodos={refreshTodos}
+						setRefreshTodos={setRefreshTodos}
+					/>
+				);
+			})}
 		</div>
 	);
 };
