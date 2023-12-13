@@ -19,5 +19,5 @@ export const useRequestGet = (refreshTodos, id, setText, newTaskText) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [refreshTodos]);
 
-	return { taskArray, isLoading };
+	return { taskArray, isLoading, setTaskArray };
 };

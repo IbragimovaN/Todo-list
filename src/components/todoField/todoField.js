@@ -7,7 +7,7 @@ export const TodoField = ({ onClickDeleteTask, onClickAddTask, value }) => {
 			<div>{value}</div>
 			<div>
 				<button onClick={onClickDeleteTask}>Удалить</button>
-				<button onClick={onClickAddTask}>Добавить/изменить</button>
+				<button onClick={onClickAddTask}>Изменить</button>
 			</div>
 		</div>
 	);

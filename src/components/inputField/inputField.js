@@ -1,7 +1,7 @@
 import styles from "./inputField.module.css";
 export const InputField = ({
 	text,
-	onClickSend,
+	onClickEdit,
 	onChangeInput,
 	onClickCancel,
 	onClickDeleteText,
@@ -17,7 +17,7 @@ export const InputField = ({
 			<div>
 				<button onClick={onClickDeleteText}>Стереть</button>
 				<button onClick={onClickCancel}>Отмена</button>
-				<button onClick={onClickSend} disabled={!text}>
+				<button onClick={onClickEdit} disabled={!text}>
 					Отрправить
 				</button>
 			</div>

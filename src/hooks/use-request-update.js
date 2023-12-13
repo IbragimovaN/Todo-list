@@ -1,8 +1,9 @@
 import { useState } from "react";
-export const useRequestUpdate = (refreshTodos, setRefreshTodos, id) => {
+export const useRequestUpdate = (refreshTodos, setRefreshTodos) => {
 	const [isUpdating, setIsUpdating] = useState(false);
 
-	const requestUpdate = (text) => {
+	const requestUpdate = (text, id) => {
+		console.log(id);
 		setRefreshTodos(!refreshTodos);
 		setIsUpdating(true);
 		fetch(`http://localhost:3005/todos/${id}`, {

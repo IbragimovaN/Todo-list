@@ -1,4 +1,6 @@
 .inputSearch{
+	display: grid;
+	grid-template-columns: 80% 20%;
 	width: 700px;
 	height: 40px;
 }

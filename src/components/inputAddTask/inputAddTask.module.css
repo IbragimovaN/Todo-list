@@ -1,0 +1,9 @@
+.inputAddTask{
+	width: 700px;
+	height: 40px;
+	position: absolute;
+	bottom: 100px;
+	display: grid;
+	grid-template-columns: 70% 15% 15%;
+
+}

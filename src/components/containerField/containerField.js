@@ -28,10 +28,7 @@ export const ContainerField = ({
 		setRefreshTodos,
 		id,
 	);
-	const { isCreating, requestAdd } = useRequestAdd(
-		setRefreshTodos,
-		refreshTodos,
-	);
+
 	const { isDeleting, requestDeleting } = useRequestDeleting(
 		refreshTodos,
 		setRefreshTodos,
@@ -59,14 +56,9 @@ export const ContainerField = ({
 		setText(newTaskText);
 	};
 
-	const onClickSend = () => {
-		if (refreshTodos) {
-			console.log("запускаем update", text);
-			requestUpdate(text);
-		} else {
-			console.log("запускаем add");
-			requestAdd(text, id);
-		}
+	const onClickEdit = () => {
+		console.log("запускаем update", text);
+		requestUpdate(text, id);
 
 		setIsOpenInput(false);
 		setEmptyField(false);
@@ -82,7 +74,7 @@ export const ContainerField = ({
 			{isOpenInput ? (
 				<InputField
 					text={text}
-					onClickSend={onClickSend}
+					onClickEdit={onClickEdit}
 					onChangeInput={onChangeInput}
 					onClickDeleteTask={onClickDeleteTask}
 					onClickCancel={onClickCancel}

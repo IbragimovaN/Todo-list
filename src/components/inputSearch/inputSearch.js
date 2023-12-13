@@ -6,6 +6,7 @@ export const InputSearch = ({ onChangeSearch, searchValue }) => {
 			type="search"
 			value={searchValue}
 			onChange={({ target }) => onChangeSearch(target)}
+			placeholder="поиск"
 		></input>
 	);
 };
