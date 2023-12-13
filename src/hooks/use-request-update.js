@@ -1,13 +1,9 @@
 import { useState } from "react";
-export const useRequestUpdate = (
-	refreshProducts,
-	setRefreshProducts,
-	id,
-	taskValue,
-) => {
+export const useRequestUpdate = (refreshTodos, setRefreshTodos, id) => {
 	const [isUpdating, setIsUpdating] = useState(false);
 
 	const requestUpdate = (text) => {
+		setRefreshTodos(!refreshTodos);
 		setIsUpdating(true);
 		fetch(`http://localhost:3005/todos/${id}`, {
 			method: "PUT",
@@ -19,7 +15,7 @@ export const useRequestUpdate = (
 			.then((rawResponse) => rawResponse.json())
 			.then((response) => {
 				console.log("Данные  обновлены:", response);
-				setRefreshProducts(!refreshProducts);
+				setRefreshTodos(!refreshTodos);
 			})
 			.finally(() => setIsUpdating(false));
 	};

@@ -1,12 +1,12 @@
 import styles from "./inputField.module.css";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 
 export const InputField = ({
 	text,
 	onClickSend,
 	onChangeInput,
-	onClickDeleteTask,
 	onClickCancel,
+	onClickDeleteText,
 }) => {
 	return (
 		<div className={styles.wrapperInput}>
@@ -17,9 +17,11 @@ export const InputField = ({
 				onChange={({ target }) => onChangeInput(target)}
 			></input>
 			<div>
-				<button onClick={onClickDeleteTask}>Удалить</button>
+				<button onClick={onClickDeleteText}>Стереть</button>
 				<button onClick={onClickCancel}>Отмена</button>
-				<button onClick={onClickSend}>Отрправить</button>
+				<button onClick={onClickSend} disabled={!text}>
+					Отрправить
+				</button>
 			</div>
 		</div>
 	);

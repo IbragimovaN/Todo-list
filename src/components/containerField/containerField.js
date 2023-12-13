@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "./containerField.module.css";
 import {
 	useRequestAdd,
@@ -17,7 +17,7 @@ export const ContainerField = ({ id, value }) => {
 	const [isArray, setIsArray] = useState(false);
 	const [emptyField, setEmptyField] = useState(true);
 
-	const { taskArray } = useRequestGet(refreshTodos, id);
+	const { taskArray } = useRequestGet(refreshTodos, id, setText, newTaskText);
 	const { isUpdating, requestUpdate, setIsUpdating } = useRequestUpdate(
 		refreshTodos,
 		setRefreshTodos,
@@ -27,7 +27,10 @@ export const ContainerField = ({ id, value }) => {
 		setRefreshTodos,
 		refreshTodos,
 	);
-	const { isDeleting, requestDeleting } = useRequestDeleting();
+	const { isDeleting, requestDeleting } = useRequestDeleting(
+		refreshTodos,
+		setRefreshTodos,
+	);
 
 	const onClickAddTask = () => {
 		setText(taskArray.value);
@@ -36,7 +39,7 @@ export const ContainerField = ({ id, value }) => {
 	};
 
 	const onClickDeleteTask = () => {
-		setRefreshTodos(true);
+		requestDeleting(id);
 	};
 
 	const onChangeInput = (target) => {
@@ -48,6 +51,7 @@ export const ContainerField = ({ id, value }) => {
 
 	const onClickCancel = () => {
 		setIsOpenInput(false);
+		setText(newTaskText);
 	};
 
 	const onClickSend = () => {
@@ -64,6 +68,10 @@ export const ContainerField = ({ id, value }) => {
 		setRefreshTodos(!refreshTodos);
 	};
 
+	const onClickDeleteText = () => {
+		setText("");
+	};
+
 	return (
 		<div className={styles.wrapper}>
 			{isOpenInput ? (
@@ -73,6 +81,7 @@ export const ContainerField = ({ id, value }) => {
 					onChangeInput={onChangeInput}
 					onClickDeleteTask={onClickDeleteTask}
 					onClickCancel={onClickCancel}
+					onClickDeleteText={onClickDeleteText}
 				/>
 			) : (
 				<TodoField
