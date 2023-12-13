@@ -3,12 +3,15 @@ import { useState } from "react";
 
 import { ContainerField } from "./components/containerField/containerField";
 import { InputSearch } from "./components/inputSearch/inputSearch";
-import { useGetSearch } from "./hooks";
-
+import { useRequestGet, useGetSearch } from "./hooks";
 export const App = () => {
 	const [searchValue, setSearchValue] = useState("");
-	const [taskArr, setTaskArr] = useState([]);
+	const newTaskText = "Новая задача";
 	const [isSearch, setIsSearch] = useState(false);
+	const [text, setText] = useState(newTaskText);
+
+	const [refreshTodos, setRefreshTodos] = useState(true);
+	const { taskArray } = useRequestGet(refreshTodos, setText, newTaskText);
 
 	const onChangeSearch = (target) => {
 		console.log("запускается");
@@ -16,24 +19,26 @@ export const App = () => {
 		setIsSearch(true);
 	};
 
-	const currentTaskId = useGetSearch(
-		setTaskArr,
-		taskArr,
-		searchValue,
-		isSearch,
-	);
-	const vva = ["003", "004"];
-	console.log(currentTaskId);
+	const filterTask = useGetSearch();
+	const currentTasks = filterTask(searchValue, taskArray);
+
 	return (
 		<div className={styles.app}>
 			<h1>Список задач</h1>
 			<InputSearch onChangeSearch={onChangeSearch} searchValue={searchValue} />
-			{vva && vva.includes("001") ? <ContainerField id={"001"} /> : <></>}
-			<ContainerField id={"002"} />
-			<ContainerField id={"003"} />
-			<ContainerField id={"004"} />
-			<ContainerField id={"005"} />
-			<ContainerField id={"006"} />
+			{currentTasks.map(({ id, value }) => (
+				<ContainerField
+					id={id}
+					refreshTodos={refreshTodos}
+					setRefreshTodos={setRefreshTodos}
+					key={id}
+					value={value}
+					text={text}
+					setText={setText}
+					taskArray={taskArray}
+					newTaskText={newTaskText}
+				/>
+			))}
 		</div>
 	);
 };

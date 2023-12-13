@@ -1,6 +1,4 @@
 import styles from "./inputField.module.css";
-// import PropTypes from "prop-types";
-
 export const InputField = ({
 	text,
 	onClickSend,
@@ -26,6 +24,3 @@ export const InputField = ({
 		</div>
 	);
 };
-// InputField.propTypes = {
-// 	text: PropTypes.string,
-// };

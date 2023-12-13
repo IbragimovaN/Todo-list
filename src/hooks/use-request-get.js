@@ -6,12 +6,12 @@ export const useRequestGet = (refreshTodos, id, setText, newTaskText) => {
 
 	useEffect(() => {
 		setIsLoading(true);
-		fetch(`http://localhost:3005/todos/${id}`)
+		fetch("http://localhost:3005/todos")
 			.then((loadedData) => loadedData.json())
 			.then((loadedTodo) => {
-				if (!loadedTodo.ok) {
-					setText(newTaskText);
-				}
+				// if (!loadedTodo.ok) {
+				// 	setText(newTaskText);
+				// }
 				setTaskArray(loadedTodo);
 			})
 

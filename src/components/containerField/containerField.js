@@ -9,15 +9,20 @@ import {
 import { TodoField } from "../todoField/todoField";
 import { InputField } from "../inputField/inputField";
 
-export const ContainerField = ({ id, value }) => {
+export const ContainerField = ({
+	id,
+	value,
+	refreshTodos,
+	setRefreshTodos,
+	text,
+	setText,
+	taskArray,
+	newTaskText,
+}) => {
 	const [isOpenInput, setIsOpenInput] = useState(false);
-	const newTaskText = "Новая задача";
-	const [refreshTodos, setRefreshTodos] = useState(false);
-	const [text, setText] = useState(newTaskText);
 	const [isArray, setIsArray] = useState(false);
 	const [emptyField, setEmptyField] = useState(true);
 
-	const { taskArray } = useRequestGet(refreshTodos, id, setText, newTaskText);
 	const { isUpdating, requestUpdate, setIsUpdating } = useRequestUpdate(
 		refreshTodos,
 		setRefreshTodos,
@@ -55,7 +60,7 @@ export const ContainerField = ({ id, value }) => {
 	};
 
 	const onClickSend = () => {
-		if (taskArray.value) {
+		if (refreshTodos) {
 			console.log("запускаем update", text);
 			requestUpdate(text);
 		} else {
@@ -86,17 +91,8 @@ export const ContainerField = ({ id, value }) => {
 			) : (
 				<TodoField
 					value={value}
-					isArray={isArray}
-					taskArray={taskArray}
 					onClickDeleteTask={onClickDeleteTask}
 					onClickAddTask={onClickAddTask}
-					isOpenInput={isOpenInput}
-					text={text}
-					onChangeInput={onChangeInput}
-					onClickCancel={onClickCancel}
-					onClickSend={onClickSend}
-					id={id}
-					refreshTodos={refreshTodos}
 				/>
 			)}
 		</div>
