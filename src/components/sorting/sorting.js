@@ -1,38 +1,39 @@
+import { useState } from "react";
 import styles from "./sorting.module.css";
-import { useRequestUpdate } from "../../hooks";
-export const Sorting = ({
-	taskArray,
-	setTaskArray,
-	refreshTodos,
-	setRefreshTodos,
-}) => {
-	const { requestUpdate } = useRequestUpdate(refreshTodos, setRefreshTodos);
 
-	const onClickSorting = () => {
-		console.log("нажали на сортировку");
-		console.log(taskArray);
-		const sortedTasks = taskArray.sort((a, b) => {
-			if (a.value.toLowerCase() < b.value.toLowerCase()) {
-				return -1;
-			}
-			if (a.value.toLowerCase() > b.value.toLowerCase()) {
-				return 1;
-			}
-			return 0;
-		});
-		console.log(sortedTasks);
+export const Sorting = ({ taskArray, setTaskArray }) => {
+	const [order, setOrder] = useState("ASC");
 
-		sortedTasks.forEach(({ value, id }) => {
-			requestUpdate(value, id);
-		});
-
-		setTaskArray(sortedTasks);
-		console.log(taskArray);
-		setRefreshTodos(!refreshTodos);
+	const onClickSorting = (sequence) => {
+		if (sequence === "ASC") {
+			const sortedTasks = taskArray.slice().sort((a, b) => {
+				if (a.value.toLowerCase() < b.value.toLowerCase()) {
+					return -1;
+				}
+				if (a.value.toLowerCase() > b.value.toLowerCase()) {
+					return 1;
+				}
+				return 0;
+			});
+			setOrder("DESC");
+			setTaskArray(sortedTasks);
+		} else {
+			const sortedTasks = taskArray.slice().sort((a, b) => {
+				if (a.value.toLowerCase() > b.value.toLowerCase()) {
+					return -1;
+				}
+				if (a.value.toLowerCase() < b.value.toLowerCase()) {
+					return 1;
+				}
+				return 0;
+			});
+			setOrder("ASC");
+			setTaskArray(sortedTasks);
+		}
 	};
 
 	return (
-		<button className={styles.btn} onClick={onClickSorting}>
+		<button className={styles.btn} onClick={() => onClickSorting(order)}>
 			А⇵Я
 		</button>
 	);

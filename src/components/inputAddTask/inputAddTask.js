@@ -24,15 +24,15 @@ export const InputAddTask = ({
 		setIsActiveAddTask(false);
 	};
 	return (
-		<div className={styles.inputAddTask}>
+		<form onSubmit={(e) => onClickSend(e)} className={styles.inputAddTask}>
 			<input
 				type="text"
 				onChange={({ target }) => onChangeInputNewTask(target)}
 			/>
-			<button type="submit" onClick={onClickSend} disabled={!newText}>
+			<button type="submit" disabled={!newText}>
 				Отрправить
 			</button>
 			<button onClick={onClickCanselEnter}>Отмена</button>
-		</div>
+		</form>
 	);
 };

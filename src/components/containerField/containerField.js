@@ -17,24 +17,22 @@ export const ContainerField = ({
 	text,
 	setText,
 	taskArray,
+	setTaskArray,
 	newTaskText,
 }) => {
 	const [isOpenInput, setIsOpenInput] = useState(false);
 	const [isArray, setIsArray] = useState(false);
 	const [emptyField, setEmptyField] = useState(true);
 
-	const { isUpdating, requestUpdate, setIsUpdating } = useRequestUpdate(
-		refreshTodos,
-		setRefreshTodos,
-		id,
-	);
+	const { isUpdating, requestUpdate, setIsUpdating } = useRequestUpdate();
 
 	const { isDeleting, requestDeleting } = useRequestDeleting(
 		refreshTodos,
 		setRefreshTodos,
 	);
 
-	const onClickAddTask = () => {
+	const onClickAddTask = (e) => {
+		e.preventDefault();
 		setText(taskArray.value);
 		setIsOpenInput(true);
 		setIsArray(true);
@@ -56,9 +54,10 @@ export const ContainerField = ({
 		setText(newTaskText);
 	};
 
-	const onClickEdit = () => {
+	const onClickEdit = (e) => {
+		e.preventDefault();
 		console.log("запускаем update", text);
-		requestUpdate(text, id);
+		requestUpdate(taskArray, setTaskArray, text, id);
 
 		setIsOpenInput(false);
 		setEmptyField(false);

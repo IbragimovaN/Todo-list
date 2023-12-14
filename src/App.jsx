@@ -10,7 +10,7 @@ import { Sorting } from "./components/sorting/sorting";
 export const App = () => {
 	const [searchValue, setSearchValue] = useState("");
 	const newTaskText = "Новая задача";
-	const [isSearch, setIsSearch] = useState(false);
+
 	const [text, setText] = useState(newTaskText);
 	const [isActiveAddTask, setIsActiveAddTask] = useState(false);
 
@@ -23,7 +23,6 @@ export const App = () => {
 
 	const onChangeSearch = (target) => {
 		setSearchValue(target.value);
-		setIsSearch(true);
 	};
 
 	const filterTask = useGetSearch();
@@ -37,13 +36,7 @@ export const App = () => {
 		<div className={styles.app}>
 			<h1>Список задач</h1>
 			<InputSearch onChangeSearch={onChangeSearch} searchValue={searchValue} />
-			<Sorting
-				taskArray={taskArray}
-				setTaskArray={setTaskArray}
-				refreshTodos={refreshTodos}
-				setRefreshTodos={setRefreshTodos}
-				text={text}
-			/>
+			<Sorting taskArray={taskArray} setTaskArray={setTaskArray} />
 			{currentTasks.map(({ id, value }) => (
 				<ContainerField
 					id={id}
@@ -54,6 +47,7 @@ export const App = () => {
 					text={text}
 					setText={setText}
 					taskArray={taskArray}
+					setTaskArray={setTaskArray}
 					newTaskText={newTaskText}
 				/>
 			))}

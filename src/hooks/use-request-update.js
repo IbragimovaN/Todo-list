@@ -1,24 +1,24 @@
 import { useState } from "react";
-export const useRequestUpdate = (refreshTodos, setRefreshTodos) => {
+export const useRequestUpdate = () => {
 	const [isUpdating, setIsUpdating] = useState(false);
 
-	const requestUpdate = (text, id) => {
-		console.log(id);
-		setRefreshTodos(!refreshTodos);
+	const requestUpdate = async (taskArray, setTaskArray, text, id) => {
 		setIsUpdating(true);
-		fetch(`http://localhost:3005/todos/${id}`, {
-			method: "PUT",
+		const currentTaskIndex = taskArray.findIndex((item) => {
+			return item.id === id;
+		});
+		const response = await fetch(`http://localhost:3005/todos/${id}`, {
+			method: "PATCH",
 			headers: { "Content-Type": "application/json;charset=utf-8" },
 			body: JSON.stringify({
 				value: text,
 			}),
-		})
-			.then((rawResponse) => rawResponse.json())
-			.then((response) => {
-				console.log("Данные  обновлены:", response);
-				setRefreshTodos(!refreshTodos);
-			})
-			.finally(() => setIsUpdating(false));
+		});
+		const updatedTask = response.json();
+		const copyTaskArr = taskArray.slice();
+		copyTaskArr[currentTaskIndex] = updatedTask;
+		setTaskArray(copyTaskArr);
+		setIsUpdating(false);
 	};
 
 	return { isUpdating, requestUpdate, setIsUpdating };

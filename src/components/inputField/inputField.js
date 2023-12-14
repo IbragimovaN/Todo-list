@@ -7,7 +7,7 @@ export const InputField = ({
 	onClickDeleteText,
 }) => {
 	return (
-		<div className={styles.wrapperInput}>
+		<form onSubmit={(e) => onClickEdit(e)} className={styles.wrapperInput}>
 			<input
 				className={styles.input}
 				type="text"
@@ -17,10 +17,10 @@ export const InputField = ({
 			<div>
 				<button onClick={onClickDeleteText}>Стереть</button>
 				<button onClick={onClickCancel}>Отмена</button>
-				<button onClick={onClickEdit} disabled={!text}>
+				<button type="submit" disabled={!text}>
 					Отрправить
 				</button>
 			</div>
-		</div>
+		</form>
 	);
 };

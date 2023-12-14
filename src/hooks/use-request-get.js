@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export const useRequestGet = (refreshTodos, id, setText, newTaskText) => {
+export const useRequestGet = (refreshTodos) => {
 	const [taskArray, setTaskArray] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -9,9 +9,6 @@ export const useRequestGet = (refreshTodos, id, setText, newTaskText) => {
 		fetch("http://localhost:3005/todos")
 			.then((loadedData) => loadedData.json())
 			.then((loadedTodo) => {
-				// if (!loadedTodo.ok) {
-				// 	setText(newTaskText);
-				// }
 				setTaskArray(loadedTodo);
 			})
 
