@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 export const useGetSearch = () => {
 	const filterTask = (searchText, taskArr) => {
 		if (!searchText) {

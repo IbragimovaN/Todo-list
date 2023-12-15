@@ -1,20 +1,12 @@
 import styles from "./inputAddTask.module.css";
 import { useState } from "react";
-import { useRequestAdd } from "../../hooks";
 
-export const InputAddTask = ({
-	setRefreshTodos,
-	refreshTodos,
-	setIsActiveAddTask,
-}) => {
+export const InputAddTask = ({ setIsActiveAddTask, requestAdd }) => {
 	const [newText, setNewText] = useState("");
 	const onChangeInputNewTask = (target) => {
 		setNewText(target.value);
 	};
-	const { isCreating, requestAdd } = useRequestAdd(
-		setRefreshTodos,
-		refreshTodos,
-	);
+
 	const onClickSend = () => {
 		console.log("запускаем add");
 		requestAdd(newText);

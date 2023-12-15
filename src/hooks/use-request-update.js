@@ -2,7 +2,7 @@ import { useState } from "react";
 export const useRequestUpdate = () => {
 	const [isUpdating, setIsUpdating] = useState(false);
 
-	const requestUpdate = async (taskArray, setTaskArray, text, id) => {
+	const requestUpdate = async (taskArray, setTaskArray, inputText, id) => {
 		setIsUpdating(true);
 		const currentTaskIndex = taskArray.findIndex((item) => {
 			return item.id === id;
@@ -11,7 +11,7 @@ export const useRequestUpdate = () => {
 			method: "PATCH",
 			headers: { "Content-Type": "application/json;charset=utf-8" },
 			body: JSON.stringify({
-				value: text,
+				value: inputText,
 			}),
 		});
 		const updatedTask = response.json();
