@@ -14,28 +14,27 @@ import { InputAddTask } from "./components/inputAddTask/inputAddTask";
 import { Sorting } from "./components/sorting/sorting";
 
 export const App = () => {
-	const [searchValue, setSearchValue] = useState("");
 	const [text, setText] = useState("");
 	const [isActiveAddTask, setIsActiveAddTask] = useState(false);
 	const [refreshTodos, setRefreshTodos] = useState(true);
+	const [isSearch, setIsSearch] = useState(false);
 
-	const { taskArray, setTaskArray } = useRequestGet(refreshTodos, setText);
+	const { taskArray, isLoading, setTaskArray } = useRequestGet(
+		refreshTodos,
+		setText,
+	);
 	const { isCreating, requestAdd } = useRequestAdd(
 		setRefreshTodos,
 		refreshTodos,
 	);
-	const { isUpdating, requestUpdate, setIsUpdating } = useRequestUpdate();
-	const { isDeleting, requestDeleting } = useRequestDeleting(
-		refreshTodos,
-		setRefreshTodos,
+	const { requestUpdate } = useRequestUpdate();
+	const { requestDeleting } = useRequestDeleting(refreshTodos, setRefreshTodos);
+
+	const { onChangeSearch, searchValue, currentTasks } = useGetSearch(
+		taskArray,
+		isSearch,
+		setIsSearch,
 	);
-
-	const onChangeSearch = (target) => {
-		setSearchValue(target.value);
-	};
-
-	const filterTask = useGetSearch();
-	const currentTasks = filterTask(searchValue, taskArray);
 
 	const onClickAddTask = () => {
 		setIsActiveAddTask(true);
@@ -57,6 +56,7 @@ export const App = () => {
 				requestUpdate={requestUpdate}
 				requestDeleting={requestDeleting}
 				currentTasks={currentTasks}
+				isLoading={isLoading}
 			/>
 
 			{isActiveAddTask ? (
@@ -65,6 +65,7 @@ export const App = () => {
 					refreshTodos={refreshTodos}
 					setIsActiveAddTask={setIsActiveAddTask}
 					requestAdd={requestAdd}
+					isCreating={isCreating}
 				/>
 			) : (
 				<button className={styles.btnAddTask} onClick={onClickAddTask}>

@@ -9,7 +9,6 @@ export const useRequestDeleting = (refreshTodos, setRefreshTodos) => {
 		})
 			.then((rawResponse) => rawResponse.json())
 			.then((response) => {
-				console.log("Задача удалена:", response);
 				setRefreshTodos(!refreshTodos);
 			})
 			.finally(() => setIsDeleting(false));

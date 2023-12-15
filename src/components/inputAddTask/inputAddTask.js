@@ -1,7 +1,11 @@
 import styles from "./inputAddTask.module.css";
 import { useState } from "react";
 
-export const InputAddTask = ({ setIsActiveAddTask, requestAdd }) => {
+export const InputAddTask = ({
+	setIsActiveAddTask,
+	requestAdd,
+	isCreating,
+}) => {
 	const [newText, setNewText] = useState("");
 	const onChangeInputNewTask = (target) => {
 		setNewText(target.value);
@@ -21,7 +25,7 @@ export const InputAddTask = ({ setIsActiveAddTask, requestAdd }) => {
 				type="text"
 				onChange={({ target }) => onChangeInputNewTask(target)}
 			/>
-			<button type="submit" disabled={!newText}>
+			<button type="submit" disabled={!newText && isCreating}>
 				Отрправить
 			</button>
 			<button onClick={onClickCanselEnter}>Отмена</button>

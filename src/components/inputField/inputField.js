@@ -9,6 +9,7 @@ export const InputField = ({
 	setRefreshTodos,
 	refreshTodos,
 	value,
+	isUpdating,
 }) => {
 	const [inputText, setInputText] = useState(value);
 	const onClickSendUpdatedTask = (e) => {
