@@ -21,7 +21,7 @@ export const ContainerField = ({
 				<Loader />
 			) : (
 				<>
-					{currentTasks.map(({ id, value }) => (
+					{Object.entries(currentTasks).map(([id, { value }]) => (
 						<div className={styles.wrapper} id={id} key={id}>
 							<TodoField
 								id={id}

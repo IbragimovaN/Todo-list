@@ -1,5 +1,6 @@
 import styles from "./inputField.module.css";
 import { useState } from "react";
+
 export const InputField = ({
 	requestUpdate,
 	taskArray,
@@ -14,7 +15,7 @@ export const InputField = ({
 	const [inputText, setInputText] = useState(value);
 	const onClickSendUpdatedTask = (e) => {
 		e.preventDefault();
-		requestUpdate(taskArray, setTaskArray, inputText, id);
+		requestUpdate(inputText, id);
 		setIsOpenInput(false);
 		setRefreshTodos(!refreshTodos);
 	};

@@ -19,10 +19,7 @@ export const App = () => {
 	const [refreshTodos, setRefreshTodos] = useState(true);
 	const [isSearch, setIsSearch] = useState(false);
 
-	const { taskArray, isLoading, setTaskArray } = useRequestGet(
-		refreshTodos,
-		setText,
-	);
+	const { taskArray, isLoading, setTaskArray } = useRequestGet();
 	const { isCreating, requestAdd } = useRequestAdd(
 		setRefreshTodos,
 		refreshTodos,
