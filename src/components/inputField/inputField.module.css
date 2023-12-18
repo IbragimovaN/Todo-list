@@ -1,36 +1,82 @@
-.wrapper{
+.wrapper {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	padding: 10px;
 	width: 700px;
-
 }
 
-
-.wrapperInput{
+.wrapperInput {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	align-items: center;
-	justify-content: center;
+	justify-content: space-between;
 	padding: 10px;
 	background-color: rgb(197, 236, 223);
 	width: 100%;
 }
 
-.wrapperTodo{
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-padding: 10px;
-background-color: rgb(208, 222, 247);
-width: 100%;
+.wrapperTodo {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 10px;
+	background-color: rgb(208, 222, 247);
+	width: 100%;
 }
 
-.input{
-width: 100%;
-height: 30px;
+.input {
+	width: 70%;
+	height: 30px;
+	font-size: 18px;
 }
 
+.buttonsWrapper {
+	display: flex;
+	flex-direction: row;
+	justify-content: end;
+}
+
+.cleanBtn {
+	border-radius: 100%;
+	background-color: #8ad7f5;
+	border: none;
+	width: 40px;
+	height: 40px;
+	margin-left: 5px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #fff;
+	font-size: 18px;
+}
+
+.cancelBtn {
+	border-radius: 100%;
+	background-color: #f4b032;
+	border: none;
+	width: 40px;
+	height: 40px;
+	margin-left: 5px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #fff;
+	font-size: 18px;
+}
+
+.sendingBtn {
+	border-radius: 100%;
+	background-color: #5fdf92;
+	border: none;
+	width: 40px;
+	height: 40px;
+	margin-left: 5px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #fff;
+	font-size: 18px;
+}

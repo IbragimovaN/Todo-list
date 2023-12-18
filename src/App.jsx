@@ -44,6 +44,7 @@ export const App = () => {
 		<div className={styles.app}>
 			<h1>Список задач</h1>
 			<InputSearch onChangeSearch={onChangeSearch} searchValue={searchValue} />
+
 			<Sorting taskArray={taskArray} setTaskArray={setTaskArray} />
 
 			<ContainerField

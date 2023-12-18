@@ -15,6 +15,8 @@ export const TodoField = ({
 	refreshTodos,
 }) => {
 	const [isOpenInput, setIsOpenInput] = useState(false);
+	const [completed, setCompleted] = useState(false);
+
 	const onClickDeleteTask = () => {
 		requestDeleting(id);
 	};
@@ -22,6 +24,12 @@ export const TodoField = ({
 	const onClickEditTask = () => {
 		// setText(taskArray.value);
 		setIsOpenInput(true);
+	};
+
+	const onCompletedChange = (newCompleted) => {
+		setCompleted(newCompleted);
+		console.log(newCompleted);
+		// console.log(completed, id);
 	};
 
 	return (
@@ -41,10 +49,20 @@ export const TodoField = ({
 				/>
 			) : (
 				<div className={styles.wrapperTodo}>
-					<div>{value}</div>
-					<div>
-						<button onClick={onClickDeleteTask}>Удалить</button>
-						<button onClick={onClickEditTask}>Изменить</button>
+					<input
+						className={styles.checkedTask}
+						type="checkbox"
+						checked={completed}
+						onChange={({ target }) => onCompletedChange(target.checked)}
+					/>
+					<div className={styles.textTask}>{value}</div>
+					<div className={styles.buttonWrapper}>
+						<button className={styles.editBtn} onClick={onClickEditTask}>
+							✎{" "}
+						</button>
+						<button className={styles.deleteBtn} onClick={onClickDeleteTask}>
+							✖
+						</button>
 					</div>
 				</div>
 			)}

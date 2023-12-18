@@ -1,14 +1,12 @@
-.wrapper{
+.wrapper {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	width: 700px;
-
 }
 
-
-.wrapperInput{
+.wrapperInput {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -18,18 +16,67 @@
 	width: 100%;
 }
 
-.wrapperTodo{
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-background-color: rgb(208, 222, 247);
-width: 100%;
+.wrapperTodo {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	background-color: rgb(208, 222, 247);
+	padding: 10px;
+	width: 100%;
 }
 
-.input{
-width: 100%;
-height: 30px;
+.input {
+	width: 100%;
+	height: 30px;
 }
 
+.textTask {
+	width: 60%;
+	height: 30px;
+	font-size: 18px;
+}
 
+.buttonWrapper {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.editBtn {
+	width: 40px;
+	border: none;
+	border-radius: 100%;
+	background-color: #1b1bfb;
+	height: 40px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #fff;
+	font-size: 18px;
+}
+.deleteBtn {
+	border-radius: 100%;
+	background-color: #f93a30;
+	border: none;
+	width: 40px;
+	height: 40px;
+	margin-left: 5px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #fff;
+	font-size: 18px;
+}
+
+.checkedTask {
+	border: none;
+	width: 30px;
+	height: 30px;
+
+	color: #fff;
+	font-size: 18px;
+}
+.checkedTask:checked {
+	background-color: #30f98e;
+}

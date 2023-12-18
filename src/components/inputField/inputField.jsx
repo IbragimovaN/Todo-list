@@ -41,11 +41,19 @@ export const InputField = ({
 				value={inputText}
 				onChange={({ target }) => onChangeInput(target)}
 			></input>
-			<div>
-				<button onClick={onClickCleanText}>Стереть</button>
-				<button onClick={onClickCancel}>Отмена</button>
-				<button type="submit" disabled={!inputText}>
-					Отрправить
+			<div className={styles.buttonsWrapper}>
+				<button className={styles.cleanBtn} onClick={onClickCleanText}>
+					⌫
+				</button>
+				<button className={styles.cancelBtn} onClick={onClickCancel}>
+					↶
+				</button>
+				<button
+					className={styles.sendingBtn}
+					type="submit"
+					disabled={!inputText}
+				>
+					✔
 				</button>
 			</div>
 		</form>

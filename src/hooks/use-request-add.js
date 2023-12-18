@@ -11,6 +11,7 @@ export const useRequestAdd = (setRefreshTodos, refreshTodos) => {
 			headers: { "Content-Type": "application/json;charset=utf-8" },
 			body: JSON.stringify({
 				value: text,
+				completed: false,
 			}),
 		})
 			.then((rawResponse) => rawResponse.json())
