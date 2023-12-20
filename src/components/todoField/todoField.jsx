@@ -26,10 +26,14 @@ export const TodoField = ({
 		setIsOpenInput(true);
 	};
 
-	const onCompletedChange = (newCompleted) => {
-		setCompleted(newCompleted);
-		console.log(newCompleted);
-		// console.log(completed, id);
+	const onCompletedChange = (e) => {
+		// e.preventDefault();
+		setCompleted(e.target.checked);
+		console.log(e.target.checked, id);
+		requestUpdate(taskArray, setTaskArray, id, {
+			id: id,
+			completed: completed,
+		});
 	};
 
 	return (
@@ -53,12 +57,12 @@ export const TodoField = ({
 						className={styles.checkedTask}
 						type="checkbox"
 						checked={completed}
-						onChange={({ target }) => onCompletedChange(target.checked)}
+						onChange={(e) => onCompletedChange(e)}
 					/>
 					<div className={styles.textTask}>{value}</div>
 					<div className={styles.buttonWrapper}>
 						<button className={styles.editBtn} onClick={onClickEditTask}>
-							✎{" "}
+							✎
 						</button>
 						<button className={styles.deleteBtn} onClick={onClickDeleteTask}>
 							✖

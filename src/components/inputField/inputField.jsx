@@ -14,7 +14,10 @@ export const InputField = ({
 	const [inputText, setInputText] = useState(value);
 	const onClickSendUpdatedTask = (e) => {
 		e.preventDefault();
-		requestUpdate(taskArray, setTaskArray, inputText, id);
+		requestUpdate(taskArray, setTaskArray, id, {
+			value: inputText,
+		});
+
 		setIsOpenInput(false);
 		setRefreshTodos(!refreshTodos);
 	};

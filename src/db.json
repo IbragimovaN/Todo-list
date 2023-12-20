@@ -1,19 +1,14 @@
 {
   "todos": [
     {
-      "value": "11115",
+      "value": "122211",
       "completed": false,
       "id": 1
     },
     {
-      "value": "0009",
+      "value": "222222222",
       "completed": false,
       "id": 2
-    },
-    {
-      "value": "33335",
-      "completed": false,
-      "id": 3
     }
   ]
 }
