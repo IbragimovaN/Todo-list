@@ -21,7 +21,7 @@ export const ContainerField = ({
 				<Loader />
 			) : (
 				<>
-					{currentTasks.map(({ id, value }) => (
+					{currentTasks.map(({ id, value, completed }) => (
 						<div className={styles.wrapper} id={id} key={id}>
 							<TodoField
 								id={id}
@@ -35,6 +35,7 @@ export const ContainerField = ({
 								setRefreshTodos={setRefreshTodos}
 								refreshTodos={refreshTodos}
 								isUpdating={isUpdating}
+								completed={completed}
 							/>
 						</div>
 					))}

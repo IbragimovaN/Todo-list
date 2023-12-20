@@ -13,9 +13,10 @@ export const TodoField = ({
 	setTaskArray,
 	setRefreshTodos,
 	refreshTodos,
+	completed,
 }) => {
 	const [isOpenInput, setIsOpenInput] = useState(false);
-	const [completed, setCompleted] = useState(false);
+	// const [completed, setCompleted] = useState(false);
 
 	const onClickDeleteTask = () => {
 		requestDeleting(id);
@@ -28,11 +29,11 @@ export const TodoField = ({
 
 	const onCompletedChange = (e) => {
 		// e.preventDefault();
-		setCompleted(e.target.checked);
+		completed = e.target.checked;
 		console.log(e.target.checked, id);
 		requestUpdate(taskArray, setTaskArray, id, {
 			id: id,
-			completed: completed,
+			complete: completed,
 		});
 	};
 

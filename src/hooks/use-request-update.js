@@ -13,12 +13,18 @@ export const useRequestUpdate = () => {
 			method: "PATCH",
 			headers: { "Content-Type": "application/json;charset=utf-8" },
 			body: JSON.stringify(updateObg),
-		});
-		const updatedTask = response.json();
-		console.log(updatedTask);
-		const copyTaskArr = taskArray.slice();
-		copyTaskArr[currentTaskIndex] = updatedTask;
-		setTaskArray(copyTaskArr);
+		})
+			.then((response) => {
+				return response.json();
+			})
+			.then((updatedTask) => {
+				console.log(updatedTask);
+				const copyTaskArr = taskArray.slice();
+				copyTaskArr[currentTaskIndex] = updatedTask;
+				setTaskArray(copyTaskArr);
+				return taskArray;
+			});
+
 		setIsUpdating(false);
 	};
 
