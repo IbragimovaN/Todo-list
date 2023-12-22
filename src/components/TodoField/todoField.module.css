@@ -1,0 +1,21 @@
+.checkedTask {
+	border: none;
+	width: 30px;
+	height: 30px;
+
+	color: #fff;
+	font-size: 18px;
+}
+.checkedTask:checked {
+	background-color: #30f98e;
+}
+.wrapperTodo {
+	width: 900px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: left;
+	background-color: rgb(208, 222, 247);
+	padding: 10px;
+	margin-bottom: 10px;
+}
