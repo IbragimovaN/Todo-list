@@ -1,18 +1,15 @@
 import styles from "./manePage.module.css";
-import { AddTaskField } from "../addTaskField/addTaskField";
 import { useState, useEffect } from "react";
-import { readTodos } from "../../api/api";
-import { TodoField } from "../TodoField/todoField";
-import { Search } from "../inputSearch/search";
-import { Sorting } from "../sorting/sorting";
+import { readTodos, updateTodo } from "../../api/api";
+import { setTodoInTodos } from "../../utils";
 import { Link, Outlet } from "react-router-dom";
+import { ControlPanel } from "../controlPanel/controlPanel";
 
-export const MainPage = ({ todos, setTodos }) => {
+export const MainPage = ({ isOpenTask, setIsOpenTask }) => {
 	const [refreshTodos, setRefreshTodos] = useState(true);
 	const [searchPhrase, setSearchPhrase] = useState("");
 	const [isAlphabetSorting, setIsAlphabetSorting] = useState(false);
-
-	const [isOpenTask, setIsOpenTask] = useState(false);
+	const [todos, setTodos] = useState([]);
 
 	useEffect(() => {
 		readTodos(searchPhrase, isAlphabetSorting).then((loadedTodos) =>
@@ -24,26 +21,39 @@ export const MainPage = ({ todos, setTodos }) => {
 		setIsOpenTask(true);
 	};
 
+	const onCompletedChange = (id, newCompleted) => {
+		console.log(newCompleted);
+		updateTodo({ id, completed: newCompleted }).then(() => {
+			setTodos(setTodoInTodos(todos, { id, completed: newCompleted }));
+		});
+	};
+
 	return (
 		<div className={styles.mainPage}>
 			{isOpenTask === false ? (
 				<>
-					<AddTaskField
+					<ControlPanel
+						onSearch={setSearchPhrase}
+						onSorting={setIsAlphabetSorting}
 						setRefreshTodos={setRefreshTodos}
 						refreshTodos={refreshTodos}
 					/>
-					<Search onSearch={setSearchPhrase} />
-					<Sorting onSorting={setIsAlphabetSorting} />
 					{todos.map(({ id, title, completed }) => (
-						<Link to={`todo/${id}`} key={id}>
-							<TodoField
-								key={id}
-								id={id}
-								title={title}
-								completed={completed}
-								onClickOpenTask={onClickOpenTask}
+						<div key={id} className={styles.wrapperTodo}>
+							<input
+								className={styles.checkedTask}
+								type="checkbox"
+								checked={completed}
+								onChange={({ target }) => onCompletedChange(id, target.checked)}
 							/>
-						</Link>
+							<div onClick={onClickOpenTask}>
+								<Link to={`todo/${id}`} key={id}>
+									<div className={styles.link}>
+										{title.length > 30 ? title.slice(0, 100) + "..." : title}
+									</div>
+								</Link>
+							</div>
+						</div>
 					))}
 				</>
 			) : (

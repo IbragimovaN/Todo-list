@@ -1,21 +1,30 @@
 import { MainPage } from "./components/mainPage/mainPage";
-import { Routes, Route, Outlet } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { NotFound } from "./components/notFound/notFound";
 import { TaskPage } from "./components/taskPage/taskPage";
 
 import { useState } from "react";
 
 export const App = () => {
-	const [todos, setTodos] = useState([]);
+	const [isOpenTask, setIsOpenTask] = useState(false);
 	return (
 		<>
 			<Routes>
 				<Route
 					path="/"
-					element={<MainPage todos={todos} setTodos={setTodos} />}
+					element={
+						<MainPage isOpenTask={isOpenTask} setIsOpenTask={setIsOpenTask} />
+					}
 				/>
-				<Route path="todo/:id" element={<TaskPage todos={todos} />} />
-				<Route path="*" element={<NotFound />} />
+				<Route
+					path="todo/:id"
+					element={
+						<TaskPage isOpenTask={isOpenTask} setIsOpenTask={setIsOpenTask} />
+					}
+				/>
+
+				<Route path="/404" element={<NotFound />} />
+				<Route path="*" element={<Navigate to="/404" />} />
 			</Routes>
 		</>
 	);

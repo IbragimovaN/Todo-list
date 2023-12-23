@@ -31,12 +31,13 @@ export const Search = ({ onSearch }) => {
 	};
 
 	return (
-		<form className={styles.search} onSubmit={onSubmit}>
+		<form className={styles.formSearch} onSubmit={onSubmit}>
 			<input
 				type="text"
 				value={value}
 				placeholder="Поиск..."
 				onChange={onChange}
+				className={styles.inputSearch}
 			/>
 		</form>
 	);

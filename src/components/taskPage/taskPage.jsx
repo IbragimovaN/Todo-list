@@ -1,21 +1,27 @@
 import styles from "./taskPage.module.css";
 import { BackButton } from "../backBtn/back-btn";
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { todoForTaskPage } from "../../api/api";
+import { TodoNotFound } from "../notFound/todoNotFound";
 
-export const TaskPage = ({ todos }) => {
+export const TaskPage = ({ isOpenTask, setIsOpenTask }) => {
 	const [isOpenInput, setIsOpenInput] = useState(false);
+	const [currentTask, setCurrentTask] = useState({});
 
 	const params = useParams();
-	console.log(todos);
-	console.log(params.id);
 
-	const ff = todos.find((item) => {
-		return item.id == params.id;
-	});
-	console.log(ff);
+	useEffect(() => {
+		todoForTaskPage(params.id, isOpenTask).then((loadedTodos) => {
+			if (loadedTodos.length === 0) {
+				return <TodoNotFound />;
+			} else {
+				setCurrentTask(loadedTodos);
+			}
+		});
+	}, [isOpenTask, params.id]);
 
-	let { title, completed, id } = ff;
+	const { title, completed } = currentTask;
 
 	const [inputText, setInputText] = useState(title);
 
@@ -28,12 +34,12 @@ export const TaskPage = ({ todos }) => {
 	const onChangeInput = (target) => {
 		setInputText(target.value);
 	};
-	const onClickCleanText = () => {
-		setInputText("");
-	};
+	// const onClickCleanText = () => {
+	// 	setInputText("");
+	// };
 	return (
 		<div className={styles.taskPage}>
-			<BackButton />
+			<BackButton isOpenTask={isOpenTask} setIsOpenTask={setIsOpenTask} />
 			<div className={styles.wrapper}>
 				{isOpenInput ? (
 					<form className={styles.wrapperInput}>
@@ -44,9 +50,7 @@ export const TaskPage = ({ todos }) => {
 							onChange={({ target }) => onChangeInput(target)}
 						></input>
 						<div className={styles.buttonsWrapper}>
-							<button className={styles.cleanBtn} onClick={onClickCleanText}>
-								⌫
-							</button>
+							<button className={styles.cleanBtn}>⌫</button>
 							<button className={styles.cancelBtn} onClick={onClickCancel}>
 								↶
 							</button>

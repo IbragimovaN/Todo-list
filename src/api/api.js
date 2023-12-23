@@ -1,6 +1,6 @@
 import { HTTP_METHOD } from "../constants";
 
-const fetchServer = (method, { id, ...payload } = {}) => {
+const fetchServer = (method, { id, ...payload } = {}, isOpen) => {
 	let url = `http://localhost:3003/todos`;
 	let options = {
 		method,
@@ -8,6 +8,10 @@ const fetchServer = (method, { id, ...payload } = {}) => {
 	};
 
 	if (method === HTTP_METHOD.GET) {
+		if (isOpen) {
+			url += `/${id}`;
+		}
+
 		const { searchPhrase, isAlphabetSorting } = payload;
 		const sortingParams = isAlphabetSorting
 			? "_sort=title&_order=asc"
@@ -34,3 +38,6 @@ export const readTodos = (searchPhrase = "", isAlphabetSorting = false) =>
 export const updateTodo = (todoData) => fetchServer("PATCH", todoData);
 
 export const deleteTodo = (todoId) => fetchServer("DELETE", { id: todoId });
+
+export const todoForTaskPage = (idFromParams, isOpenTask) =>
+	fetchServer("GET", { id: idFromParams }, isOpenTask);
