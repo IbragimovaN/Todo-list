@@ -1,31 +1,41 @@
-import { MainPage } from "./components/mainPage/mainPage";
-import { Routes, Route, Navigate } from "react-router-dom";
-import { NotFound } from "./components/notFound/notFound";
-import { TaskPage } from "./components/taskPage/taskPage";
-
-import { useState } from "react";
+import styles from "./app.module.css";
+import { useState, useEffect } from "react";
+import { readTodos } from "./api/api";
+import { ControlPanel } from "./components/controlPanel/controlPanel";
+import { TodoField } from "./components/todoField/todoField";
 
 export const App = () => {
-	const [isOpenTask, setIsOpenTask] = useState(false);
-	return (
-		<>
-			<Routes>
-				<Route
-					path="/"
-					element={
-						<MainPage isOpenTask={isOpenTask} setIsOpenTask={setIsOpenTask} />
-					}
-				/>
-				<Route
-					path="todo/:id"
-					element={
-						<TaskPage isOpenTask={isOpenTask} setIsOpenTask={setIsOpenTask} />
-					}
-				/>
+	const [refreshTodos, setRefreshTodos] = useState(true);
+	const [searchPhrase, setSearchPhrase] = useState("");
+	const [isAlphabetSorting, setIsAlphabetSorting] = useState(false);
+	const [todos, setTodos] = useState([]);
 
-				<Route path="/404" element={<NotFound />} />
-				<Route path="*" element={<Navigate to="/404" />} />
-			</Routes>
-		</>
+	useEffect(() => {
+		readTodos(searchPhrase, isAlphabetSorting).then((loadedTodos) =>
+			setTodos(loadedTodos),
+		);
+	}, [refreshTodos, searchPhrase, isAlphabetSorting]);
+
+	return (
+		<div className={styles.mainPage}>
+			<ControlPanel
+				onSearch={setSearchPhrase}
+				onSorting={setIsAlphabetSorting}
+				setRefreshTodos={setRefreshTodos}
+				refreshTodos={refreshTodos}
+			/>
+			{todos.map(({ id, title, completed }) => (
+				<TodoField
+					key={id}
+					id={id}
+					title={title}
+					completed={completed}
+					todos={todos}
+					setTodos={setTodos}
+					refreshTodos={refreshTodos}
+					setRefreshTodos={setRefreshTodos}
+				/>
+			))}
+		</div>
 	);
 };

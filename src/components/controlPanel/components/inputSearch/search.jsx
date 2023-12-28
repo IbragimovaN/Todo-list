@@ -1,16 +1,3 @@
-// import styles from "./inputSearch.module.css";
-// export const InputSearch = ({ onChangeSearch, searchValue }) => {
-// 	return (
-// 		<input
-// 			className={styles.inputSearch}
-// 			type="search"
-// 			// value={searchValue}
-// 			// onChange={({ target }) => onChangeSearch(target)}
-// 			placeholder="поиск"
-// 		></input>
-// 	);
-// };
-
 import { useRef, useState } from "react";
 import { debounce } from "./utils";
 import styles from "./search.module.css";

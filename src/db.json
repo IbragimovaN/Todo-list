@@ -1,29 +1,24 @@
 {
-	"todos": [
-		{
-			"title": "Покормить кота",
-			"completed": false,
-			"id": 1
-		},
-		{
-			"title": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.",
-			"completed": false,
-			"id": 2
-		},
-		{
-			"title": "ЯЯяя",
-			"completed": false,
-			"id": 3
-		},
-		{
-			"title": "ЯЯяя",
-			"completed": false,
-			"id": 4
-		},
-		{
-			"title": "аааа",
-			"completed": false,
-			"id": 5
-		}
-	]
+  "todos": [
+    {
+      "title": "Покормить кота7",
+      "completed": false,
+      "id": 1
+    },
+    {
+      "title": "ggggg",
+      "completed": false,
+      "id": 3
+    },
+    {
+      "title": "pppp8",
+      "completed": false,
+      "id": 4
+    },
+    {
+      "title": "kkkjjjoo",
+      "completed": false,
+      "id": 5
+    }
+  ]
 }

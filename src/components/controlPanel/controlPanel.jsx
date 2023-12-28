@@ -1,8 +1,8 @@
 import styles from "./controlPanel.module.css";
 import { useState } from "react";
-import { Search } from "../inputSearch/search";
-import { Sorting } from "../sorting/sorting";
-import { AddTaskField } from "../addTaskField/addTaskField";
+import { Search } from "./components/inputSearch/search";
+import { Sorting } from "./components/sorting/sorting";
+import { AddTaskField } from "./components/addTaskField/addTaskField";
 
 export const ControlPanel = ({
 	setRefreshTodos,
