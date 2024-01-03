@@ -1,29 +1,31 @@
 import styles from "./todoField.module.css";
 import { InputField } from "./inputField/inputField";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { updateTodo, deleteTodo } from "../../api/api";
 import { setTodoInTodos, removeTodoInTodos } from "../../utils";
+import { AppContext } from "../../context";
 
-export const TodoField = ({
-	todos,
-	setTodos,
-	id,
-	title,
-	completed,
-	refreshTodos,
-	setRefreshTodos,
-}) => {
+export const TodoField = ({ id, title, completed }) => {
+	const { dispatch, todos } = useContext(AppContext);
 	const [isOpenInput, setIsOpenInput] = useState(false);
 	const [inputText, setInputText] = useState("");
 
 	const onCompletedChange = (id, newCompleted) => {
 		updateTodo({ id, completed: newCompleted }).then(() => {
-			setTodos(setTodoInTodos(todos, { id, completed: newCompleted }));
+			dispatch({
+				type: "SET_TODOS",
+				payload: setTodoInTodos(todos, { id, completed: newCompleted }),
+			});
 		});
 	};
 
 	const onClickDeleteTask = (id) => {
-		deleteTodo(id).then(() => setTodos(removeTodoInTodos(todos, id)));
+		deleteTodo(id).then(() => {
+			dispatch({
+				type: "SET_TODOS",
+				payload: removeTodoInTodos(todos, id),
+			});
+		});
 	};
 
 	const onClickEditTask = () => {
@@ -38,10 +40,6 @@ export const TodoField = ({
 					title={title}
 					inputText={inputText}
 					setInputText={setInputText}
-					todos={todos}
-					setTodos={setTodos}
-					refreshTodos={refreshTodos}
-					setRefreshTodos={setRefreshTodos}
 					id={id}
 				/>
 			) : (

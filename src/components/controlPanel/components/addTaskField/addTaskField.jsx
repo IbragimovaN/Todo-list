@@ -1,13 +1,12 @@
 import { useState } from "react";
 import styles from "./addTaskField.module.css";
 import { createTodo } from "../../../../api/api";
+import { useContext } from "react";
+import { AppContext } from "../../../../context";
 
-export const AddTaskField = ({
-	setRefreshTodos,
-	refreshTodos,
-	setIsActiveAddTask,
-}) => {
+export const AddTaskField = ({ setIsActiveAddTask }) => {
 	const [textNewTask, setTextNewTask] = useState("");
+	const { dispatch } = useContext(AppContext);
 
 	const onChangeInputNewTask = (target) => {
 		setTextNewTask(target.value);
@@ -20,7 +19,7 @@ export const AddTaskField = ({
 			completed: false,
 		};
 		createTodo(newTodo);
-		setRefreshTodos(!refreshTodos);
+		dispatch({ type: "SET_REFRESH_TODOS" });
 		setIsActiveAddTask(false);
 	};
 

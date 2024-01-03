@@ -1,25 +1,21 @@
 import styles from "./inputField.module.css";
 import { updateTodo } from "../../../api/api";
 import { setTodoInTodos } from "../../../utils";
+import { AppContext } from "../../../context";
+import { useContext } from "react";
 
-export const InputField = ({
-	id,
-	setIsOpenInput,
-	inputText,
-	setInputText,
-	todos,
-	setTodos,
-	refreshTodos,
-	setRefreshTodos,
-}) => {
+export const InputField = ({ id, setIsOpenInput, inputText, setInputText }) => {
+	const { dispatch, todos } = useContext(AppContext);
 	const onClickSendUpdatedTask = (e) => {
 		e.preventDefault();
 		updateTodo({ id, title: inputText }).then(() => {
-			console.log(id);
-			setTodos(setTodoInTodos(todos, { id, title: inputText }));
+			dispatch({
+				type: "SET_TODOS",
+				payload: setTodoInTodos(todos, { id, title: inputText }),
+			});
 		});
 		setIsOpenInput(false);
-		setRefreshTodos(!refreshTodos);
+		dispatch({ type: "SET_REFRESH_TODOS" });
 	};
 
 	const onClickCancel = () => {

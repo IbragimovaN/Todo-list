@@ -1,11 +1,18 @@
 import { useRef, useState } from "react";
 import { debounce } from "./utils";
 import styles from "./search.module.css";
+import { useContext } from "react";
+import { AppContext } from "../../../../context";
 
-export const Search = ({ onSearch }) => {
+export const Search = () => {
+	const { dispatch } = useContext(AppContext);
 	const [value, setValue] = useState("");
 
-	const debouncedOnSearch = useRef(debounce(onSearch, 1500)).current;
+	const debouncedOnSearch = useRef(
+		debounce((value) => {
+			dispatch({ type: "SET_SEARCH_PHRASE", payload: value });
+		}, 1500),
+	).current;
 
 	const onChange = ({ target }) => {
 		setValue(target.value);
@@ -14,7 +21,8 @@ export const Search = ({ onSearch }) => {
 
 	const onSubmit = (event) => {
 		event.preventDefault();
-		onSearch(value);
+		dispatch({ type: "SET_SEARCH_PHRASE", payload: value });
+		// setSearchPhrase(value);
 	};
 
 	return (
