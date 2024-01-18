@@ -1,19 +1,17 @@
 import styles from "./inputField.module.css";
 import { updateTodo } from "../../../api/api";
-import { setTodoInTodos } from "../../../utils";
-import { AppContext } from "../../../context";
-import { useContext } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { changeTodos } from "../../../actions";
 
-export const InputField = ({ id, setIsOpenInput, inputText, setInputText }) => {
-	const { dispatch, todos } = useContext(AppContext);
+export const InputField = ({ id, setIsOpenInput }) => {
+	const inputText = useSelector((state) => state.todoFieldState.inputText);
+	const dispatch = useDispatch();
+
 	const onClickSendUpdatedTask = (e) => {
 		e.preventDefault();
-		updateTodo({ id, title: inputText }).then(() => {
-			dispatch({
-				type: "SET_TODOS",
-				payload: setTodoInTodos(todos, { id, title: inputText }),
-			});
-		});
+		updateTodo({ id, title: inputText });
+		dispatch(changeTodos());
+
 		setIsOpenInput(false);
 		dispatch({ type: "SET_REFRESH_TODOS" });
 	};
@@ -23,12 +21,18 @@ export const InputField = ({ id, setIsOpenInput, inputText, setInputText }) => {
 	};
 
 	const onChangeInput = (target) => {
-		setInputText(target.value);
+		dispatch({
+			type: "SET_INPUT_TEXT",
+			payload: target.value,
+		});
 	};
 
 	const onClickCleanText = (e) => {
 		e.preventDefault();
-		setInputText("");
+		dispatch({
+			type: "SET_INPUT_TEXT",
+			payload: "",
+		});
 	};
 
 	return (

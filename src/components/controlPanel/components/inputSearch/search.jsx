@@ -1,12 +1,12 @@
 import { useRef, useState } from "react";
 import { debounce } from "./utils";
 import styles from "./search.module.css";
-import { useContext } from "react";
-import { AppContext } from "../../../../context";
+import { useSelector, useDispatch } from "react-redux";
 
 export const Search = () => {
-	const { dispatch } = useContext(AppContext);
 	const [value, setValue] = useState("");
+
+	const dispatch = useDispatch();
 
 	const debouncedOnSearch = useRef(
 		debounce((value) => {

@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { useContext } from "react";
-import { AppContext } from "../../../../context";
+import { useSelector, useDispatch } from "react-redux";
 import styles from "./sorting.module.css";
 
 export const Sorting = () => {
-	const { dispatch } = useContext(AppContext);
 	const [isEnabled, setIsEnabled] = useState(false);
+
+	const dispatch = useDispatch();
 
 	const onChange = ({ target }) => {
 		setIsEnabled(target.checked);

@@ -1,47 +1,39 @@
 import styles from "./todoField.module.css";
 import { InputField } from "./inputField/inputField";
-import { useState, useContext } from "react";
 import { updateTodo, deleteTodo } from "../../api/api";
 import { setTodoInTodos, removeTodoInTodos } from "../../utils";
-import { AppContext } from "../../context";
+import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
+import { changeTodos } from "../../actions";
 
 export const TodoField = ({ id, title, completed }) => {
-	const { dispatch, todos } = useContext(AppContext);
+	const todos = useSelector((state) => state.todoState);
+
+	const dispatch = useDispatch();
 	const [isOpenInput, setIsOpenInput] = useState(false);
-	const [inputText, setInputText] = useState("");
 
 	const onCompletedChange = (id, newCompleted) => {
-		updateTodo({ id, completed: newCompleted }).then(() => {
-			dispatch({
-				type: "SET_TODOS",
-				payload: setTodoInTodos(todos, { id, completed: newCompleted }),
-			});
-		});
+		updateTodo({ id, completed: newCompleted });
+		dispatch(changeTodos());
 	};
 
 	const onClickDeleteTask = (id) => {
-		deleteTodo(id).then(() => {
-			dispatch({
-				type: "SET_TODOS",
-				payload: removeTodoInTodos(todos, id),
-			});
-		});
+		deleteTodo(id);
+		dispatch(changeTodos());
 	};
 
 	const onClickEditTask = () => {
-		setInputText(title);
+		dispatch({
+			type: "SET_INPUT_TEXT",
+			payload: title,
+		});
+
 		setIsOpenInput(true);
 	};
 	return (
 		<>
 			{isOpenInput ? (
-				<InputField
-					setIsOpenInput={setIsOpenInput}
-					title={title}
-					inputText={inputText}
-					setInputText={setInputText}
-					id={id}
-				/>
+				<InputField title={title} id={id} setIsOpenInput={setIsOpenInput} />
 			) : (
 				<div className={styles.wrapperTodo}>
 					<input

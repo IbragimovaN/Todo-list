@@ -1,61 +1,46 @@
 import styles from "./app.module.css";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { readTodos } from "./api/api";
 import { ControlPanel } from "./components/controlPanel/controlPanel";
 import { TodoField } from "./components/todoField/todoField";
-import { AppContext } from "./context.js";
+import { useSelector, useDispatch } from "react-redux";
+import { changeTodos } from "./actions";
+import thunk from "redux-thunk";
 
 export const App = () => {
-	const [refreshTodos, setRefreshTodos] = useState(true);
-	const [searchPhrase, setSearchPhrase] = useState("");
-	const [isAlphabetSorting, setIsAlphabetSorting] = useState(false);
-	const [todos, setTodos] = useState([]);
+	const todos = useSelector((state) => state.todoState);
 
-	const dispatch = (action) => {
-		const { type, payload } = action;
+	const searchPhrase = useSelector(
+		(state) => state.controlPanelState.searchPhrase,
+	);
+	const refreshTodos = useSelector(
+		(state) => state.controlPanelState.refreshTodos,
+	);
+	const isAlphabetSorting = useSelector(
+		(state) => state.controlPanelState.isAlphabetSorting,
+	);
 
-		switch (type) {
-			case "SET_SEARCH_PHRASE": {
-				setSearchPhrase(payload);
-				break;
-			}
-			case "SET_SORTING": {
-				setIsAlphabetSorting(payload);
-				break;
-			}
-			case "SET_REFRESH_TODOS": {
-				setRefreshTodos({ ...action, payload: !refreshTodos });
-				break;
-			}
-			case "SET_TODOS": {
-				setTodos(payload);
-				break;
-			}
-			default:
-			// ничего не делать
-		}
-	};
+	const dispatch = useDispatch();
 
 	useEffect(() => {
-		readTodos(searchPhrase, isAlphabetSorting).then((loadedTodos) =>
-			setTodos(loadedTodos),
-		);
+		dispatch(changeTodos());
+		// readTodos(searchPhrase, isAlphabetSorting).then((loadedfromSer) => {
+		// 	console.log(loadedfromSer);
+		// });
 	}, [refreshTodos, searchPhrase, isAlphabetSorting]);
 
 	return (
-		<AppContext.Provider
-			value={{
-				dispatch,
-				todos,
-			}}
-		>
-			<div className={styles.mainPage}>
-				<ControlPanel />
+		// <div>
+		// 	{todos.map((data) => (
+		// 		<button key={data.id}>{data.title}</button>
+		// 	))}
+		// </div>
+		<div className={styles.mainPage}>
+			<ControlPanel />
 
-				{todos.map(({ id, title, completed }) => (
-					<TodoField key={id} id={id} title={title} completed={completed} />
-				))}
-			</div>
-		</AppContext.Provider>
+			{todos.map(({ id, title, completed }) => (
+				<TodoField key={id} id={id} title={title} completed={completed} />
+			))}
+		</div>
 	);
 };
