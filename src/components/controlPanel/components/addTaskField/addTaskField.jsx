@@ -1,15 +1,16 @@
-import { useState } from "react";
 import styles from "./addTaskField.module.css";
 import { createTodo } from "../../../../api/api";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export const AddTaskField = ({ setIsActiveAddTask }) => {
-	const [textNewTask, setTextNewTask] = useState("");
+	const textNewTask = useSelector(
+		(state) => state.controlPanelState.textNewTask,
+	);
 
 	const dispatch = useDispatch();
 
 	const onChangeInputNewTask = (target) => {
-		setTextNewTask(target.value);
+		dispatch({ type: "SET_TEXT_NEW_TASK", payload: target.value });
 	};
 
 	const onClickSend = (e) => {

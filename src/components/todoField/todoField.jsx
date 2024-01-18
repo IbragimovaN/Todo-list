@@ -1,14 +1,11 @@
 import styles from "./todoField.module.css";
 import { InputField } from "./inputField/inputField";
 import { updateTodo, deleteTodo } from "../../api/api";
-import { setTodoInTodos, removeTodoInTodos } from "../../utils";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { changeTodos } from "../../actions";
 
 export const TodoField = ({ id, title, completed }) => {
-	const todos = useSelector((state) => state.todoState);
-
 	const dispatch = useDispatch();
 	const [isOpenInput, setIsOpenInput] = useState(false);
 

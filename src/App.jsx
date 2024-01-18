@@ -1,11 +1,9 @@
 import styles from "./app.module.css";
 import { useEffect } from "react";
-import { readTodos } from "./api/api";
 import { ControlPanel } from "./components/controlPanel/controlPanel";
 import { TodoField } from "./components/todoField/todoField";
 import { useSelector, useDispatch } from "react-redux";
 import { changeTodos } from "./actions";
-import thunk from "redux-thunk";
 
 export const App = () => {
 	const todos = useSelector((state) => state.todoState);
@@ -23,18 +21,10 @@ export const App = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(changeTodos());
-		// readTodos(searchPhrase, isAlphabetSorting).then((loadedfromSer) => {
-		// 	console.log(loadedfromSer);
-		// });
-	}, [refreshTodos, searchPhrase, isAlphabetSorting]);
+		dispatch(changeTodos(searchPhrase, isAlphabetSorting));
+	}, [refreshTodos, searchPhrase, isAlphabetSorting, dispatch]);
 
 	return (
-		// <div>
-		// 	{todos.map((data) => (
-		// 		<button key={data.id}>{data.title}</button>
-		// 	))}
-		// </div>
 		<div className={styles.mainPage}>
 			<ControlPanel />
 

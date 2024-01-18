@@ -1,14 +1,11 @@
-import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./sorting.module.css";
 
 export const Sorting = () => {
-	const [isEnabled, setIsEnabled] = useState(false);
-
 	const dispatch = useDispatch();
-
+	const isEnabled = useSelector((state) => state.controlPanelState.isEnabled);
 	const onChange = ({ target }) => {
-		setIsEnabled(target.checked);
+		dispatch({ type: "SET_IS_ENABLED", payload: target.checked });
 		dispatch({ type: "SET_SORTING", payload: target.checked });
 	};
 
