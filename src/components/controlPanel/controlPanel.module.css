@@ -1,0 +1,21 @@
+.wrapperControlPanel {
+	width: 920px;
+
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	background-color: #5d5f65;
+	margin-bottom: 20px;
+}
+
+.btnAddTask {
+	width: 100px;
+	background-color: #fff;
+	height: 40px;
+	border: none;
+	border-left: 1px solid rgb(90, 89, 89);
+	border-right: 1px solid rgb(90, 89, 89);
+}
+.btnAddTask :hover {
+	background-color: aqua;
+}

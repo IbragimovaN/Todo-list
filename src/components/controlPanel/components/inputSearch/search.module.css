@@ -1,0 +1,18 @@
+.formSearch {
+	height: 40px;
+	margin-bottom: 10px;
+	width: 770px;
+	background-color: #fff;
+	margin: 0;
+	padding: 0;
+	border: 1px solid rgb(90, 89, 89);
+}
+.inputSearch {
+	height: 100%;
+	width: 100%;
+	background-color: #fff;
+	margin: 0;
+	padding: 0;
+	border: none;
+	padding-left: 10px;
+}
